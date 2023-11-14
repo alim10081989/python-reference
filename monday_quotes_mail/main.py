@@ -14,5 +14,5 @@ if tday == 1:
     with smtplib.SMTP('smtp.gmail.com') as connection:
         connection.starttls()
         connection.login(user=my_email, password=password)
-        connection.sendmail(from_addr=my_email, to_addrs='azim.sheikh3@gmail.com',
+        connection.sendmail(from_addr=my_email, to_addrs='alpha@gmail.com',
                             msg=f'Subject:Monday Motivation\n\n{quote}'.encode('utf8'))
