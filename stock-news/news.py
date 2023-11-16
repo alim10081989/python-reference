@@ -15,8 +15,9 @@ class CompanyNews:
         self.company_name = name
         self.stock_price = sp
         self.message = None
+        self.formatted_articles = None
 
-    def send_news_sms(self):
+    def get_news(self):
         news_params = {
             'apiKey': NEWS_API_KEY,
             'qInTitle': self.company_name,
@@ -28,12 +29,14 @@ class CompanyNews:
         three_articles = articles[:3]
 
         trend = self.stock_price.stock_trend()
-        formatted_articles = [f"{trend}%\nHeadline: {article['title']}\n" \
+        self.formatted_articles = [f"{trend}%\nHeadline: {article['title']}\n" \
                               f"Brief:]{article['description']}" for article in three_articles]
-
+        
+        self.send_sms()
+    
+    def send_sms(self):
         client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-
-        for article in formatted_articles:
+        for article in self.formatted_articles:
             print(article)
             message = client.messages.create(
                 from_='+11234567890',
